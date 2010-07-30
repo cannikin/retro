@@ -19,6 +19,12 @@
       height: 100%;
       color: #333333;
       }
+    a {
+      color: #6a3e00;
+      }
+      a:hover {
+        color: #9eb933;
+        }
     h1 {
       height: 7%;
       min-height: 40px;
@@ -30,16 +36,43 @@
         }
     h2 {
       font-family: "orgovan-rounded-web-1","orgovan-rounded-web-2","Helvetica Neue",Helvetica,Arial,sans-serif;
+      letter-spacing: -0.06em;
       }
-    section h2 {
-      font-size: 300%;
-      font-weight: bold;
-      text-align: left;
-      padding: 0.1em 0.3em;
-      color: #f48c00;
-      background-color: #ffffcc;
-      border-right: 4px solid #ffffff;
+    section {
+      overflow: auto;
       }
+      section header {
+        display: block;
+        background-color: #FBF1B6;
+        border-right: 4px solid #ffffff;
+        padding: 0.1em 0.3em;
+        overflow: hidden;
+        }
+        section header h2 {
+          font-size: 300%;
+          font-weight: bold;
+          color: #f48c00;
+          float: left;
+          }
+        section header a {
+          font-family: monospace;
+          font-weight: bold;
+          display: block;
+          padding: 0 0.2em;
+          margin: 0.2em;
+          line-height: 1;
+          float: right;
+          font-size: 270%;
+          text-decoration: none;
+          color: #ffffff;
+          background-color: #9eb933;
+          -moz-border-radius: 20px;
+          -webkit-border-radius: 20px;
+          }
+          section header a:hover {
+            color: #ffffff;
+            background-color: #89A029;
+            }
     #suggestions {
       overflow: hidden;
       height: 60%;
@@ -60,49 +93,152 @@
       height: 33%;
       }
     ul {
-      font-size: 131%;
+      font-size: 146.5%;
       }
-    ul li {
-      display: block;
-      float: left;
-      margin: 0.5em 1em;
-      padding: 0.5em 1em;
-      background-color: #9eb933;
-      color: #ffffff;
-      text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
-      border: 2px solid #ffffff;
-      -moz-border-radius: 8px;
-      -webkit-border-radius: 8px;
-      -moz-box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-      -webkit-box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+      ul li {
+        display: block;
+        float: left;
+        margin: 0.4em 1em;
+        padding: 0.5em 1em;
+        background-color: #9eb933;
+        color: #ffffff;
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+        border: 2px solid #ffffff;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+        -webkit-box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+        }
+    #new {
+      width: 40em;
+      height: 23em;
+      position: absolute;
+      background-color: #ffffff;
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      margin: 0 auto;
+      top: 200px;
+      left: 400px;
+      border: 5px solid #ffffff;
+      -moz-box-shadow: 10px 10px 100px rgba(0,0,0,0.3);
+      -webkit-box-shadow: 10px 10px 100px rgba(0,0,0,0.3);
       }
+      #new h2 {
+        background-color: #6a3e00;
+        padding: 0.4em;
+        font-size: 197%;
+        color: #ffffff;
+        -webkit-border-radius: 10px 10px 0 0;
+        }
+      #new fieldset {
+        font-size: 161.6%;
+        margin: 1em;
+        text-align: center;
+        }
+        #new fieldset label {
+          font-size: 161.6%;
+          }
+        #new fieldset select {
+          padding: 0 0.2em;
+          }
+        #new fieldset textarea {
+          display: block;
+          width: 100%;
+          height: 7em;
+          margin: 0 0 1em;
+          font-family: Georgia;
+          }
+          #new fieldset textarea.default {
+            color: #aaaaaa;
+            }
+        #new fieldset input {
+          background-color: #f48c00;
+          border: 1px solid #f48c00;
+          -moz-border-radius: 6px;
+          -webkit-border-radius: 6px;
+          color: white;
+          text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+          padding: 0.2em 1em;
+          cursor: pointer; }
   </style>
+  
+  <script type="text/javascript">
+    var Retro = {
+      MAX_ROTATION:3,
+      addTo:null,
+      rotate:function(obj) {
+        var rand = Math.round((Math.random() * (this.MAX_ROTATION*2) - 3) * 10) / 10;
+        $(obj).css({'-moz-transform':'rotate('+rand+'deg)', '-webkit-transform':'rotate('+rand+'deg)'});
+      },
+      add:function(obj) {
+        this.addTo = obj;
+        $('#new').find('textarea').addClass('default').attr('value',this.addTo.find('h2').text()+'...').end().show();
+      },
+      cancel:function() {
+        $('#new').hide();
+        this.addTo = null;
+      },
+      save:function() {
+        this.addTo.find('ul').append("<li>"+$('#new textarea').attr('value')+"</li>");
+        this.cancel();
+      }
+    };
+    
+    $(document).ready(function() {
+      $('li').each(function() {
+        Retro.rotate(this);
+      });
+      $('header a').click(function() {
+        Retro.add($(this).parent().parent());
+      });
+      $('#new').find('a').click(function() {
+        Retro.cancel();
+      }).end().find('textarea').focus(function() {
+        $(this).removeClass('default').attr('value','');
+      }).end().submit(function() {
+        Retro.save();
+        return false;
+      });
+    });
+  </script>
 </head>
 <body>
   <h1><span>Retro : For Agile Retrospectives</span></h1>
-  <div id="suggestions">
+  <section id="suggestions">
     <section id="worked">
-      <h2>What Worked</h2>
+      <header>
+        <h2>What Worked</h2>
+        <a href="#">+</a>
+      </header>
       <ul>
         <li>I liked that this and that happened</li>
         <li>I like the free lunch we got</li>
       </ul>
     </section>
     <section id="failed">
-      <h2>What Didn't</h2>
+      <header>
+        <h2>What Didn't</h2>
+        <a href="#">+</a>
+      </header>
       <ul>
         <li>I don't like not getting free food</li>
       </ul>
     </section>
     <section id="next">
-      <h2>Next Time</h2>
+      <header>
+        <h2>Next Time</h2>
+        <a href="#">+</a>
+      </header>
       <ul>
         <li>Next time I want some more money</li>
       </ul>
     </section>
-  </div>
+  </section>
   <section id="kudos">
-    <h2>Kudos</h2>
+    <header>
+      <h2>Kudos</h2>
+      <a href="#">+</a>
+    </header>
     <ul>
       <li>I thought this person and that person were awesome</li>
       <li>Johnny K. was great</li>
@@ -110,5 +246,23 @@
       <li>Kudos to McDonalds for the great catering</li>
     </ul>
   </section>
+  <form id="new" style="display:none;">
+    <header>
+      <h2>New Sticky</h2>
+    </header>
+    <fieldset>
+      <!--
+      <label for="pick_section">Section</label>
+      <select id="pick_section" name="section">
+        <option value="worked">What Worked</option>
+        <option value="failed">What Didn't</option>
+        <option value="next">Next Time</option>
+        <option value="kudos">Kudos</option>
+      </select>
+      -->
+      <textarea name="content" class="default">What worked...</textarea>
+      <input type="submit" name="commit" id="commit" value="Stick it"> or <a href="#">Cancel</a>
+    </fieldset>
+  </form>
 </body>
 </html>
