@@ -22,6 +22,7 @@
     h1 {
       height: 7%;
       min-height: 40px;
+      max-height: 40px;
       background: #6a3e00 url("logo.png") top left no-repeat;
       }
       h1 span {
@@ -33,9 +34,11 @@
     section h2 {
       font-size: 300%;
       font-weight: bold;
-      text-align: center;
-      margin: 0.1em;
+      text-align: left;
+      padding: 0.1em 0.3em;
       color: #f48c00;
+      background-color: #ffffcc;
+      border-right: 4px solid #ffffff;
       }
     #suggestions {
       overflow: hidden;
@@ -46,20 +49,22 @@
       height: 100%;
       float: left;
       }
+    #next {
+      width: 34%;
+      }
+      #next h2 {
+        border: none;
+        }
     #kudos {
       width: 100%;
       height: 33%;
-      background-color: #eeeeee
       }
-      #kudos h2 {
-        text-align: left;
-        margin: 0.1em 0.2em;
-        }
     ul {
       font-size: 131%;
       }
     ul li {
       display: block;
+      float: left;
       margin: 0.5em 1em;
       padding: 0.5em 1em;
       background-color: #9eb933;
@@ -100,6 +105,9 @@
     <h2>Kudos</h2>
     <ul>
       <li>I thought this person and that person were awesome</li>
+      <li>Johnny K. was great</li>
+      <li>This was fun too</li>
+      <li>Kudos to McDonalds for the great catering</li>
     </ul>
   </section>
 </body>
