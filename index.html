@@ -61,6 +61,7 @@
           padding: 0 0.2em;
           margin: 0.2em;
           line-height: 1;
+          text-align: center;
           float: right;
           font-size: 270%;
           text-decoration: none;
@@ -83,11 +84,12 @@
       float: left;
       }
     #next {
-      width: 34%;
+      width: 33%;
       }
       #next h2 {
         border: none;
         }
+      
     #kudos {
       width: 100%;
       height: 33%;
@@ -102,6 +104,7 @@
         padding: 0.5em 1em;
         background-color: #9eb933;
         color: #ffffff;
+        cursor: pointer;
         text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
         border: 2px solid #ffffff;
         -moz-border-radius: 8px;
@@ -109,6 +112,12 @@
         -moz-box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
         -webkit-box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
         }
+        ul li:hover {
+          background-color: #92AA2D;
+          }
+          ul li .votes {
+            padding: 0 0 0 0.5em;
+            }
     #new {
       width: 40em;
       height: 23em;
@@ -160,11 +169,13 @@
           text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
           padding: 0.2em 1em;
           cursor: pointer; }
+    */
   </style>
   
   <script type="text/javascript">
     var Retro = {
       MAX_ROTATION:3,
+      VOTE_SYMBOL:'&#10003;',
       addTo:null,
       rotate:function(obj) {
         var rand = Math.round((Math.random() * (this.MAX_ROTATION*2) - 3) * 10) / 10;
@@ -179,14 +190,21 @@
         this.addTo = null;
       },
       save:function() {
-        this.addTo.find('ul').append("<li>"+$('#new textarea').attr('value')+"</li>");
+        this.addTo.find('ul').append("<li title=\"Click to vote\">"+$('#new textarea').attr('value')+"<span class=\"votes\"></span></li>");
+        this.rotate(this.addTo.find('li').last().click(function() { Retro.vote(this) }));
         this.cancel();
+      },
+      vote:function(obj) {
+        $(obj).find('.votes').html($(obj).find('.votes').html() + this.VOTE_SYMBOL);
       }
     };
     
     $(document).ready(function() {
       $('li').each(function() {
         Retro.rotate(this);
+      });
+      $('li').click(function() {
+        Retro.vote(this);
       });
       $('header a').click(function() {
         Retro.add($(this).parent().parent());
@@ -211,8 +229,8 @@
         <a href="#">+</a>
       </header>
       <ul>
-        <li>I liked that this and that happened</li>
-        <li>I like the free lunch we got</li>
+        <li>I liked that this and that happened<span class="votes"></span></li>
+        <li>I like the free lunch we got<span class="votes"></span></li>
       </ul>
     </section>
     <section id="failed">
@@ -221,7 +239,7 @@
         <a href="#">+</a>
       </header>
       <ul>
-        <li>I don't like not getting free food</li>
+        <li>I don't like not getting free food<span class="votes"></span></li>
       </ul>
     </section>
     <section id="next">
@@ -230,7 +248,7 @@
         <a href="#">+</a>
       </header>
       <ul>
-        <li>Next time I want some more money</li>
+        <li>Next time I want some more money<span class="votes"></span></li>
       </ul>
     </section>
   </section>
@@ -251,15 +269,6 @@
       <h2>New Sticky</h2>
     </header>
     <fieldset>
-      <!--
-      <label for="pick_section">Section</label>
-      <select id="pick_section" name="section">
-        <option value="worked">What Worked</option>
-        <option value="failed">What Didn't</option>
-        <option value="next">Next Time</option>
-        <option value="kudos">Kudos</option>
-      </select>
-      -->
       <textarea name="content" class="default">What worked...</textarea>
       <input type="submit" name="commit" id="commit" value="Stick it"> or <a href="#">Cancel</a>
     </fieldset>
