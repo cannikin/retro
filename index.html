@@ -2,108 +2,9 @@
 <html>
 <head>
   <title>Retro : For Agile Retrospectives</title>
-  <link type="text/css" rel="stylesheet" href="reset-fonts.css" media="all" />
+  <link type="text/css" rel="stylesheet" href="reset-fonts.css" media="all">
   <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
-  <style type="text/css">
-    /*
-      yellow: #FFE217
-      orange: #f48c00
-       green: #9eb933
-       brown: #6a3e00
-    */
-    html{color:#000;background:#FFF;}body,div,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,input,textarea{margin:0;padding:0;}fieldset{border:0;}li{list-style:none;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}input,textarea{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea{*font-size:100%;}body {font:13px/1.231 "Helvetica Neue",Helvetica,Arial,clean,sans-serif;*font-size:small;*font:x-small;font-weight: 400;}
-    html, body {height:100%;color:#333333;}
-    a {color:#6a3e00;}
-      a:hover {color:#9eb933;}
-    nav {height:40px;background:#6a3e00 url("logo.png") top left no-repeat;}
-      nav h1 span {display:none;}
-        nav ul {float:right;margin:0.6em 0 0;}
-          nav ul li {display:block;float:left;margin:0 0.5em;}
-            nav ul li a {display:block;background-color:#f48c00;color:#ffffff;text-decoration:none;padding:0.2em 0.5em;font-size:116%;-moz-border-radius:4px;-webkit-border-radius:4px;}
-    h2 {letter-spacing: -0.06em;}
-    section {overflow: auto;}
-      section header {display:block;background-color:#FBF1B6;border-right:4px solid #ffffff;padding:0.1em 0.3em;overflow:hidden;}
-        section header h2 {font-size:300%;font-weight:bold;color:#f48c00;float:left;}
-        section header a {font-family:monospace;font-weight:bold;display:block;padding:0 0.22em;margin:0.2em;line-height:1;text-align:center;float:right;font-size:270%;text-decoration:none;color:#ffffff;background-color:#9eb933;-moz-border-radius:20px;-webkit-border-radius:20px;}
-          section header a:hover {color:#ffffff;background-color:#89A029;}
-    #worked, #failed, #next {width:33%;padding:0 0 1em;float:left;}
-    #next {width:34%;}
-      #next header {border:none;}
-    section ul {font-size:146.5%;}
-      section ul li {
-        display: block;
-        float: left;
-        margin: 0.4em 1em;
-        padding: 0.5em 1em;
-        background-color: #9eb933;
-        color: #ffffff;
-        cursor: pointer;
-        text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
-        border: 2px solid #ffffff;
-        -moz-border-radius: 8px;
-        -webkit-border-radius: 8px;
-        -moz-box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-        -webkit-box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-        }
-        section ul li:hover {
-          background-color: #92AA2D;
-          }
-          section ul li .votes {
-            padding: 0 0 0 0.5em;
-            }
-    #new {
-      width: 40em;
-      height: 23em;
-      position: absolute;
-      background-color: #ffffff;
-      -moz-border-radius: 10px;
-      -webkit-border-radius: 10px;
-      margin: 0 auto;
-      top: 200px;
-      left: 400px;
-      border: 5px solid #ffffff;
-      -moz-box-shadow: 10px 10px 100px rgba(0,0,0,0.3);
-      -webkit-box-shadow: 10px 10px 100px rgba(0,0,0,0.3);
-      }
-      #new h2 {
-        background-color: #6a3e00;
-        padding: 0.4em;
-        font-size: 197%;
-        color: #ffffff;
-        -webkit-border-radius: 10px 10px 0 0;
-        }
-      #new fieldset {
-        font-size: 161.6%;
-        margin: 1em;
-        text-align: center;
-        }
-        #new fieldset label {
-          font-size: 161.6%;
-          }
-        #new fieldset select {
-          padding: 0 0.2em;
-          }
-        #new fieldset textarea {
-          display: block;
-          width: 100%;
-          height: 7em;
-          margin: 0 0 1em;
-          font-family: Georgia;
-          }
-          #new fieldset textarea.default {
-            color: #aaaaaa;
-            }
-        #new fieldset input {
-          background-color: #f48c00;
-          border: 1px solid #f48c00;
-          -moz-border-radius: 6px;
-          -webkit-border-radius: 6px;
-          color: white;
-          text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
-          padding: 0.2em 1em;
-          cursor: pointer; }
-  </style>
-  
+  <link type="text/css" rel="stylesheet" href="default.css" media="all">
   <script type="text/javascript">
     var Retro = {
       MAX_ROTATION:3,
@@ -138,7 +39,8 @@
         }
       });
       $('#export').click(function() {
-        // change stylesheet
+        $("link").attr("href", $(this).attr('rel'));
+        $("section li").css({'-moz-transform':'none', '-webkit-transform':'none'});
       });
       $('section li').each(function() {
         Retro.rotate(this);
@@ -157,21 +59,26 @@
         Retro.save();
         return false;
       });
+      var today = new Date();
+      var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      $('#timestamp').text(days[today.getDay()]+', '+today.getDate()+' '+months[today.getMonth()]+' '+today.getFullYear());
     });
   </script>
 </head>
 <body>
   <nav>
-  <h1><span>Retro : For Agile Retrospectives</span></h1>
+    <h1><span>Retro : For Agile Retrospectives</span></h1>
+    <h2 id="timestamp"></h2>
     <ul>
       <li><a href="#" id="reset">Reset</a></li>
-      <li><a href="#" id="export">Export</a></li>
+      <li><a href="#export" id="export" rel="export.css">Export</a></li>
     </ul>
   </nav>
   <section id="worked">
     <header>
       <h2>What Worked</h2>
-      <a href="#">+</a>
+      <a href="#" title="Click to add a new sticky">+</a>
     </header>
     <ul>
       <li>I liked that this and that happened<span class="votes"></span></li>
@@ -181,7 +88,7 @@
   <section id="failed">
     <header>
       <h2>What Didn't</h2>
-      <a href="#">+</a>
+      <a href="#" title="Click to add a new sticky">+</a>
     </header>
     <ul>
       <li>I don't like not getting free food<span class="votes"></span></li>
@@ -190,7 +97,7 @@
   <section id="next">
     <header>
       <h2>Next Time</h2>
-      <a href="#">+</a>
+      <a href="#" title="Click to add a new sticky">+</a>
     </header>
     <ul>
       <li>Next time I want some more money<span class="votes"></span></li>
