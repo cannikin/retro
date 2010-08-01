@@ -1,120 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Retro : For Agile Retrospectives</title>
-  <link type="text/css" rel="stylesheet" href="reset-fonts.css" media="all">
-  <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="default.css" media="all">
-  <script type="text/javascript">
-    var Retro = {
-      MAX_ROTATION:3,
-      VOTE_SYMBOL:'&#10003;',
-      addTo:null,
-      rotate:function(obj) {
-        var rand = Math.round((Math.random() * (this.MAX_ROTATION*2) - 3) * 10) / 10;
-        $(obj).css({'-moz-transform':'rotate('+rand+'deg)', '-webkit-transform':'rotate('+rand+'deg)'});
-      },
-      add:function(obj) {
-        this.addTo = obj;
-        $('#new').find('textarea').addClass('default').attr('value',this.addTo.find('h2').text()+'...').end().show();
-      },
-      cancel:function() {
-        $('#new').hide();
-        this.addTo = null;
-      },
-      save:function() {
-        this.addTo.find('ul').append("<li title=\"Click to vote\">"+$('#new textarea').attr('value')+"<span class=\"votes\"></span></li>");
-        this.rotate(this.addTo.find('li').last().click(function() { Retro.vote(this) }));
-        this.cancel();
-      },
-      vote:function(obj) {
-        $(obj).find('.votes').html($(obj).find('.votes').html() + this.VOTE_SYMBOL);
-      }
-    };
-    
-    $(document).ready(function() {
-      $('#reset').click(function() {
-        if (confirm('Are you sure? This will remove all stickies!')) {
-          location.reload();
-        }
-      });
-      $('#export').click(function() {
-        $("link").attr("href", $(this).attr('rel'));
-        $("section li").css({'-moz-transform':'none', '-webkit-transform':'none'});
-      });
-      $('section li').each(function() {
-        Retro.rotate(this);
-      });
-      $('section li').click(function() {
-        Retro.vote(this);
-      });
-      $('header a').click(function() {
-        Retro.add($(this).parent().parent());
-      });
-      $('#new').find('a').click(function() {
-        Retro.cancel();
-      }).end().find('textarea').focus(function() {
-        $(this).removeClass('default').attr('value','');
-      }).end().submit(function() {
-        Retro.save();
-        return false;
-      });
-      $(window).bind('resize',function() {
-        $('#new').css({'left':($(window).width() / 2) - ($('#new').width() / 2)+'px','top':($(window).height() / 2) - ($('#new').height() / 2)+'px'});
-      });
-      $(window).resize();
-      var today = new Date();
-      var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      $('#timestamp').text(days[today.getDay()]+', '+today.getDate()+' '+months[today.getMonth()]+' '+today.getFullYear());
-    });
-  </script>
+<title>Retro : For Agile Retrospectives</title>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/retro.js"></script>
+<link type="text/css" rel="stylesheet" href="css/default.css" media="all">
 </head>
 <body>
-  <nav>
-    <h1><span>Retro : For Agile Retrospectives</span></h1>
-    <h2 id="timestamp"></h2>
-    <ul>
-      <li><a href="#" id="reset">Reset</a></li>
-      <li><a href="#export" id="export" rel="export.css">Export</a></li>
-    </ul>
-  </nav>
-  <section id="worked">
-    <header>
-      <h2>What Worked</h2>
-      <a href="#" title="Click to add a new sticky">+</a>
-    </header>
-    <ul>
-      <li>I liked that this and that happened<span class="votes"></span></li>
-      <li>I like the free lunch we got<span class="votes"></span></li>
-    </ul>
-  </section>
-  <section id="failed">
-    <header>
-      <h2>What Didn't</h2>
-      <a href="#" title="Click to add a new sticky">+</a>
-    </header>
-    <ul>
-      <li>I don't like not getting free food<span class="votes"></span></li>
-    </ul>
-  </section>
-  <section id="next">
-    <header>
-      <h2>Next Time</h2>
-      <a href="#" title="Click to add a new sticky">+</a>
-    </header>
-    <ul>
-      <li>Next time I want some more money<span class="votes"></span></li>
-    </ul>
-  </section>
-  <form id="new" style="display:none;">
-    <header>
-      <h2>New Sticky</h2>
-    </header>
-    <fieldset>
-      <textarea name="content" class="default">What worked...</textarea>
-      <input type="submit" name="commit" id="commit" value="Stick it"> or <a href="#">Cancel</a>
-    </fieldset>
-  </form>
+<nav>
+<h1><span>Retro:For Agile Retrospectives</span></h1>
+<h2 id="timestamp"></h2>
+<ul>
+<li><a href="#" id="reset">Reset</a></li>
+<li><a href="#export" id="export" rel="export.css">Export</a></li>
+</ul>
+</nav>
+<section id="worked">
+<header>
+<h2>What Worked</h2>
+<a href="#" title="Click to add a new sticky">+</a>
+</header>
+<ul></ul>
+</section>
+<section id="failed">
+<header>
+<h2>What Didn't</h2>
+<a href="#" title="Click to add a new sticky">+</a>
+</header>
+<ul></ul>
+</section>
+<section id="next">
+<header>
+<h2>Next Time</h2>
+<a href="#" title="Click to add a new sticky">+</a>
+</header>
+<ul></ul>
+</section>
+<form id="new" style="display:none;">
+<header>
+<h2>New Sticky</h2>
+</header>
+<fieldset>
+<textarea name="content" class="default">What worked...</textarea>
+<input type="submit" name="commit" id="commit" value="Stick it"> or <a href="#">Cancel</a>
+</fieldset>
+</form>
+<section id="intro" style="display:none;">Retro is an app to help you conduct an <a href="http://en.wikipedia.org/wiki/Retrospective#Software_development">agile retrospective</a>. Click the <span>+</span> next to each heading to add a "sticky" to that column. Afterwords you can vote for each sticky by clicking on it. When you're done, you can easily export your page. Enjoy!<a href="#" id="go">Get Started!</a></section>
 </body>
 </html>
