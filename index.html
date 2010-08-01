@@ -59,6 +59,10 @@
         Retro.save();
         return false;
       });
+      $(window).bind('resize',function() {
+        $('#new').css({'left':($(window).width() / 2) - ($('#new').width() / 2)+'px','top':($(window).height() / 2) - ($('#new').height() / 2)+'px'});
+      });
+      $(window).resize();
       var today = new Date();
       var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
       var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -103,15 +107,6 @@
       <li>Next time I want some more money<span class="votes"></span></li>
     </ul>
   </section>
-  <!--
-  <section id="kudos">
-    <header>
-      <h2>Kudos</h2>
-      <a href="#">+</a>
-    </header>
-    <ul></ul>
-  </section>
-  -->
   <form id="new" style="display:none;">
     <header>
       <h2>New Sticky</h2>
