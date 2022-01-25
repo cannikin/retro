@@ -11,7 +11,7 @@ cancel:function() {
 $('#new').hide();
 this.addTo = null;},
 save:function() {
-this.addTo.find('ul').append("<li title=\"Click to vote\">"+$('#new textarea').attr('value')+"<span class=\"votes\"></span></li>");
+this.addTo.find('ul').append("<li title=\"Click to vote\">"+$('#new textarea').val()+"<span class=\"votes\"></span></li>");
 this.rotate(this.addTo.find('li').last().click(function() { Retro.vote(this) }));
 this.cancel();},
 vote:function(obj) {
